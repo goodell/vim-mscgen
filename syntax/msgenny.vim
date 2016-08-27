@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language:     msgenny
 " Maintainer:   Dave Goodell <davidjgoodell@gmail.com>
-" Last Change:  2016 Jul 22
+" Last Change:  2016 Aug 27
 " loosely derived from conf.vim and c.vim in the Vim distribution
 " msgenny is documented here:
 "   https://github.com/sverweij/mscgen_js/blob/master/wikum/msgenny.md
@@ -22,9 +22,11 @@ syn keyword     msgennyTodo     contained TODO FIXME XXX
 " Avoid matching "text#text"
 syn match       msgennyComment  "^#.*" contains=msgennyTodo
 syn match       msgennyComment  "\s#.*"ms=s+1 contains=msgennyTodo
+syn match       msgennyComment  "//.*" contains=msgennyTodo
+syn region      msgennyComment  start="/\*" end="\*/" contains=msgennyTodo
 syn region      msgennyString   start=+"+ skip=+\\\\\|\\"+ end=+"+ oneline contains=msgennySpecial
 syn region      msgennyString   start=+'+ skip=+\\\\\|\\'+ end=+'+ oneline contains=msgennySpecial
-syn keyword     msgennyGlobal   hscale arcgradient width wordwraparcs watermark
+syn keyword     msgennyKeyword  hscale arcgradient width wordwraparcs watermark
 
 " signal
 syn match       msgennyArrow    "<->\|->\|<-\|--"
@@ -42,6 +44,7 @@ syn match       msgennyArrow    "<:>\|:>\|<:\|::"
 syn match       msgennyArrow    "|||\|---\|\.\.\."
 " boxes
 syn keyword     msgennyBox      box abox rbox note
+syn keyword     msgennyInlineExpr alt opt exc break seq strict neg critical consider ignore assert loop ref
 
 " Define the default highlighting.
 " Only used when an item doesn't have highlighting yet
@@ -50,8 +53,9 @@ hi def link msgennyTodo Todo
 hi def link msgennyString       String
 hi def link msgennyArrow        Keyword
 hi def link msgennyBox          Keyword
-hi def link msgennyGlobal       Keyword
+hi def link msgennyKeyword      Keyword
 hi def link msgennySpecial      Special
+hi def link msgennyInlineExpr   Keyword
 
 let b:current_syntax = "msgenny"
 
